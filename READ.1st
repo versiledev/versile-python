@@ -1,0 +1,39 @@
+Versile Python -- implementation of Versile Platform
+
+Copyright (C) 2011-2013 Versile AS
+
+Versile Python is free software: you can redistribute it and/or
+modify it under the terms of the GNU Lesser General Public License
+as published by the Free Software Foundation, either version 3 of
+the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+
+Important Information
+---------------------
+
+This repository contains source code, documentation and unit tests for
+Versile Python. The source code is written for python 2.6+ but was also written
+to support python 3 through the 2to3 source code conversion tool. The source
+code might be migrated to support only python v3 in some future version,
+however for the time being both versions are supported.
+
+Due to the dual version support, the source code needs to be preprocessed into
+a version 2 or version 3 release. This is done for the python 3 release
+by performing "make aprep3", and similar for python 2 with "make aprep2" (or
+make aprep to prepare both versions for release).
+
+After this pre-processing, "make dist" will package the preprocessed version(s)
+into version specific releases in the dist/ directory.
+
+Thus is it important that ONLY PRE-PROCESSED AND PACKAGED RELEASES SHOULD BE
+DISTRIBUTED AS IMPORTABLE PYTHON PACKAGES using the above method.
+
+Use "make help" to see how to e.g. build documentation.

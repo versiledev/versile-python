@@ -1,0 +1,46 @@
+.. _x509_certificate_recipe:
+
+Create a X.509 Certificate
+==========================
+
+The :term:`VPy` crypto framework includes functionality for working
+with :term:`X.509` certificates and RSA keys. Below is example code
+for generating a self-signed Certificate Authority certificate. For
+this example we use a CA keypair which is generated from a
+:term:`VDI`\ ::
+
+    #!/usr/bin/env python
+    """Generates the VOP public CA keypair."""
+    from __future__ import print_function, unicode_literals
+
+    import datetime
+
+    from versile.common.util import bytes_to_posint
+    from versile.crypto import VCrypto
+    from versile.crypto.rand import VPseudoRandomHMAC
+    from versile.crypto.x509.cert import VX509Crypto, VX509Name
+    from versile.crypto.x509.cert import VX509CertificationRequest
+
+
+    crypto = VCrypto.lazy()
+
+    # Key and serial number generated from these parameters
+    key_passphrase = b'VTLS public CA keypair'
+    key_serial_input = b'VTLS public CA serial number'
+    
+    # Create a CA key and certificate and print the CA certificate
+    key = crypto.lazy().dia(1024, b'', b'', passphrase=key_passphrase)
+    subject = VX509Name(organizationName='Dummy VTLS Signature Organization')
+    csr = VX509CertificationRequest.create(subject, key)
+    _prand = VPseudoRandomHMAC(crypto.sha1, secret=key_serial_input, seed=b'')
+    serial = bytes_to_posint(_prand(8))
+    not_after  = datetime.datetime(2050, 1, 1)
+    not_before = datetime.datetime(2011, 1, 1)
+    cert = csr.self_sign_ca(serial=serial, not_after=not_after,
+                            not_before=not_before, sign_key=key)
+    print(cert.export())
+
+This example is actually not just a random example, it is the code
+which generates the :meth:`versile.crypto.auth.VAuth.public_ca`
+keypair and certificate used for the :term:`VOP` workaround to enable
+:term:`TLS` with keys that are not signed by a real CA.

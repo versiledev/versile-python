@@ -1,0 +1,13 @@
+# Ignore Python compiled files
+*.pyc
+_dist/
+dist/
+preprocessed/
+build/
+doc/_build/
+_tmp/
+venv/
+venv3/
+
+# Ignore Emacs backup files
+*~
