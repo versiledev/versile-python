@@ -62,7 +62,7 @@ ldesc = ldesc.strip() + '\n'
 # Package meta-data
 cf = ['Development Status :: 4 - Beta',
       'Intended Audience :: Developers',
-      'License :: OSI Approved :: GNU Lesser General Public License v3',
+      'License :: OSI Approved :: GNU Lesser General Public License v3 (LGPLv3)',
       'Natural Language :: English',
       'Operating System :: MacOS :: MacOS X',
       'Operating System :: Microsoft :: Windows',
