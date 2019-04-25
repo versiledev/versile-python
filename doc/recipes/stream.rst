@@ -65,15 +65,14 @@ used to iterate through all stream data.
 ...             names, self._names = self._names, []
 ...         names.sort()
 ...         return VEntityStreamer.fixed(names).proxy()
-... 
->>> Versile.set_agpl_internal_use()
+...
 >>> VSEResolver.enable_vse()
 >>> client_link = link_pair(gw1=None, gw2=NameSorter())[0]
 >>> name_service = client_link.peer_gw()
->>> 
+>>>
 >>> for i in (5, 3, 4, 1, 2):
 ...     name_service.add(u'John Doe #%s' % i)
-... 
+...
 >>> streamer = name_service.reset()
 >>> type(streamer)
 <class 'versile.vse.stream.VEntityStreamerProxy'>
@@ -81,10 +80,10 @@ used to iterate through all stream data.
 >>> stream.set_eos_policy(True)
 >>> stream.wait_status(active=True)
 True
->>> 
+>>>
 >>> for item in stream.iterator():
 ...     print(item)
-... 
+...
 John Doe #1
 John Doe #2
 John Doe #3
@@ -94,8 +93,6 @@ John Doe #5
 
 .. testcleanup::
 
-   from versile.conf import Versile
-   Versile._reset_copyleft()
    VSEResolver.enable_vse(False)
 
 Byte Streaming
@@ -117,7 +114,7 @@ performs write and read operations.
 >>> import tempfile
 >>> from versile.vse.stream import *
 >>> from versile.quick import *
->>> 
+>>>
 >>> class Gateway(VExternal):
 ...     @publish(show=True, ctx=False)
 ...     def get_file_stream(self):
@@ -130,22 +127,21 @@ performs write and read operations.
 ...                 VStreamMode.END_CAN_INC | VStreamMode.CAN_MOVE_END)
 ...         w_buf = VByteStreamBuffer()
 ...         return VByteStreamer(data, mode, w_buf).proxy()
-... 
->>> Versile.set_agpl_internal_use()
+...
 >>> VSEResolver.enable_vse()
 >>> client_link = link_pair(gw1=None, gw2=Gateway())[0]
 >>> gw = client_link.peer_gw()
->>> 
+>>>
 >>> # Obtain a streamer reference and set up a local stream
 ... streamer = gw.get_file_stream()
 >>> stream = streamer.connect(readahead=True)
 >>> stream.wait_status(active=True)
 True
->>> 
+>>>
 >>> # Write data to the stream
 ... stream.wseek(0)
 >>> stream.write(b'This is an important message')
->>> 
+>>>
 >>> # Read back data from the stream
 ... stream.set_eos_policy(True)
 >>> stream.enable_readahead()
@@ -153,14 +149,12 @@ True
 >>> result = stream.read()
 >>> print('Read data from stream: %s' % result)
 Read data from stream: This is an important message
->>> 
+>>>
 >>> stream.close()
 >>> client_link.shutdown()
 
 .. testcleanup::
 
-   from versile.conf import Versile
-   Versile._reset_copyleft()
    VSEResolver.enable_vse(False)
 
 In this example (and the earlier entity streaming example) we used

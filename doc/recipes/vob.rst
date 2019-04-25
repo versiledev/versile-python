@@ -83,21 +83,20 @@ Below is an example which demonstrates remote use of the class.
 ...     @publish(ctx=True)
 ...     def dummy(self, ctx=None):
 ...         return repr((ctx.credentials, ctx.identity))
-... 
->>> Versile.set_agpl_internal_use()
+...
 >>> client_link = link_pair(gw1=None, gw2=NameSorter())[0]
 >>> name_service = client_link.peer_gw()
->>> 
+>>>
 >>> name_service.add(u'John Doe')
 >>> name_service.add(u'Jane Doe')
 >>> name_service.add(u'James Tiberius Kirk')
 >>> name_service.reset()
 (u'James Tiberius Kirk', u'Jane Doe', u'John Doe')
->>> 
+>>>
 >>> # Client is not authorized with an identity so no interesting result
 ... name_service.dummy()
 '((None, ()), None)'
->>> 
+>>>
 >>> # Because VExternal implements VOB, standard meta-calls can be used
 ... dir(name_service)
 [u'add', u'reset']
@@ -105,13 +104,8 @@ Below is an example which demonstrates remote use of the class.
 u'Buffers and sorts names.\n'
 >>> name_service.meta.doc(u'add')
 u'Appends a name to the name buffer.\n'
->>> 
+>>>
 >>> client_link.shutdown()
-
-.. testcleanup::
-
-   from versile.conf import Versile
-   Versile._reset_copyleft()
 
 Note how the object can be accessed remotely with the same syntax as
 if it were local. Also observe the use of *meta* calls for remote

@@ -28,31 +28,25 @@ code' section.
 
 >>> # Server-side code to set up a VOP service
 ... from versile.demo import Echoer
->>> from versile.quick import Versile, VOPService, VCrypto, VUrandom
->>> Versile.set_agpl_internal_use()
->>> server_key = VCrypto.lazy().rsa.key_factory.generate(VUrandom(), 1024/8)
+>>> from versile.quick import VOPService, VCrypto, VUrandom
+>>> server_key = VCrypto.lazy().rsa.key_factory.generate(VUrandom(), 1024//8)
 >>> gw_factory = lambda: Echoer()
 >>> service = VOPService(gw_factory, auth=None, key=server_key)
 >>> service.start()
->>> 
+>>>
 >>> # CLIENT-SIDE CODE - connect with VUrl
 ... from versile.quick import VUrl
 >>> resource = VUrl.resolve('vop://localhost/')
 >>> resource.echo(u'Test message')
 u'Test message'
 >>> resource._v_link.shutdown()
->>> 
+>>>
 >>> # Server-side service termination
 ... service.stop(True)
 
-.. testcleanup::
-
-   from versile.conf import Versile
-   Versile._reset_copyleft()
-
 Alternatively, the steps involved in obtaining a reference of parsing
 a :term:`VRI`\ , connecting to an ORB and resolving a resource on the
-peer can be performed in separate steps. 
+peer can be performed in separate steps.
 
 * Parse a VRI with :meth:`VUrl.parse` returning a :class:`VUrl`
 * Connecting to the owning ORB with :meth:`VUrl.connect`
@@ -63,13 +57,12 @@ three steps in sequence:
 
 >>> # Server-side code to set up a VOP service
 ... from versile.demo import Echoer
->>> from versile.quick import Versile, VOPService, VCrypto, VUrandom
->>> Versile.set_agpl_internal_use()
->>> server_key = VCrypto.lazy().rsa.key_factory.generate(VUrandom(), 1024/8)
+>>> from versile.quick import VOPService, VCrypto, VUrandom
+>>> server_key = VCrypto.lazy().rsa.key_factory.generate(VUrandom(), 1024//8)
 >>> gw_factory = lambda: Echoer()
 >>> service = VOPService(gw_factory, auth=None, key=server_key)
 >>> service.start()
->>> 
+>>>
 >>> # CLIENT-SIDE CODE - connect with VUrl
 ... from versile.quick import VUrl
 >>> url = VUrl.parse('vop://localhost/')
@@ -78,17 +71,12 @@ three steps in sequence:
 >>> resource.echo(u'Test message')
 u'Test message'
 >>> resource._v_link.shutdown()
->>> 
+>>>
 >>> # Server-side service termination
 ... service.stop(True)
 
-.. testcleanup::
-
-   from versile.conf import Versile
-   Versile._reset_copyleft()
-
 .. note::
-   
+
    :meth:`VUrl.resolve`\ , :meth:`VUrl.connect` and
    :meth:`VUrlResolver.resolve` can be performed as non-blocking
    operations by providing a *nowait* keyword, see documentation for
@@ -112,27 +100,21 @@ the earlier example which uses the specific implementation.
 
 >>> # Server-side code to set up a VOP service
 ... from versile.demo import Echoer
->>> from versile.quick import Versile, VOPService, VCrypto, VUrandom
->>> Versile.set_agpl_internal_use()
->>> server_key = VCrypto.lazy().rsa.key_factory.generate(VUrandom(), 1024/8)
+>>> from versile.quick import VOPService, VCrypto, VUrandom
+>>> server_key = VCrypto.lazy().rsa.key_factory.generate(VUrandom(), 1024//8)
 >>> gw_factory = lambda: Echoer()
 >>> service = VOPService(gw_factory, auth=None, key=server_key)
 >>> service.start()
->>> 
+>>>
 >>> # CLIENT-SIDE CODE - connect with VUrl
 ... from versile.reactor.io.url import VUrl
 >>> resource = VUrl.resolve('vop://localhost/')
 >>> resource.echo(u'Test message')
 u'Test message'
 >>> resource._v_link.shutdown()
->>> 
+>>>
 >>> # Server-side service termination
 ... service.stop(True)
-
-.. testcleanup::
-
-   from versile.conf import Versile
-   Versile._reset_copyleft()
 
 As the examples show, :class:`VUrl` provides a very convenient
 mechanism for easily and quickly accessing :term:`VRI` resources.
@@ -177,4 +159,3 @@ Module API for :mod:`versile.reactor.io.url`
 .. automodule:: versile.reactor.io.url
     :members:
     :show-inheritance:
-

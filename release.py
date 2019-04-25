@@ -34,7 +34,7 @@ else:
 
 # Release parameters for this release
 version = '0.8'
-release = version + '.3'
+release = version + '.4'
 
 # Common macros, the macros are encapsulated inside '[>name<]', e.g.
 # '[>RELEASE<]' is the 'RELEASE' macro.

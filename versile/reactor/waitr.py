@@ -89,7 +89,7 @@ class VFDWaitReactor(threading.Thread):
         self.__finished = False
         self.__thread = None
 
-        if _vplatform == 'ironpython' or sys.platform == b'win32':
+        if _vplatform == 'ironpython' or sys.platform == _b2s(b'win32'):
             self.__ctrl_is_pipe = False
             from versile.reactor.io.tcp import VTCPSocket
             self.__ctrl_r, self.__ctrl_w = VTCPSocket.create_native_pair()

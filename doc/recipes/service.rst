@@ -23,10 +23,9 @@ service for a gateway object which provides :term:`VRI` resolution to
 :class:`versile.demo.SimpleGateway` services::
 
     from versile.demo import SimpleGateway
-    from versile.quick import Versile, VOPService, VCrypto, VUrandom
-    Versile.set_agpl_internal_use()
+    from versile.quick import VOPService, VCrypto, VUrandom
     # For this demonstration we use a random server keypair
-    keypair = VCrypto.lazy().rsa.key_factory.generate(VUrandom(), 1024/8)
+    keypair = VCrypto.lazy().rsa.key_factory.generate(VUrandom(), 1024//8)
     # Set up and start service
     gw_factory = lambda: SimpleGateway()
     service = VOPService(gw_factory, auth=None, key=keypair)
@@ -35,7 +34,7 @@ service for a gateway object which provides :term:`VRI` resolution to
 
 .. note::
 
-    See ':ref:`resolve_vri_recipe`\ ' for a recipe how to connect to the 
+    See ':ref:`resolve_vri_recipe`\ ' for a recipe how to connect to the
     service
 
 The service in this example runs infinitely. In order create services

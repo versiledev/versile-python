@@ -6,7 +6,7 @@ Overview
 :term:`Versile Python` is an implementation for python v2.6+ and
 v3.x of :term:`Versile Platform`\ .
 
-Python "combines remarkable power with very clear syntax", and
+Python combines remarkable power with clear syntax and
 :term:`VPy` makes service interaction particularly easy. By taking
 advantage of flexible python language capabilities, :term:`VPy` offers
 a natural syntax for interacting with remote objects as if they were
@@ -53,21 +53,15 @@ Remote object interaction
 Below is a simple example which establishes two locally connected
 :class:`versile.orb.link.VLink` end points and then interacts with an
 "echo service" reference received from one link peer. Notice the call
-to ``echoer.echo()`` as if *echoer* was a local object. 
+to ``echoer.echo()`` as if *echoer* was a local object.
 
 >>> from versile.demo import Echoer
->>> from versile.quick import Versile, link_pair
->>> Versile.set_agpl_internal_use()
+>>> from versile.quick import link_pair
 >>> client = link_pair(gw1=None, gw2=Echoer())[0]
 >>> echoer = client.peer_gw()
 >>> echoer.echo(u'Slartibartfast')
 u'Slartibartfast'
 >>> client.shutdown()
-
-.. testcleanup::
-
-   from versile.conf import Versile
-   Versile._reset_copyleft()
 
 The platform offers convenient mechanisms for making non-blocking
 calls. The below example performs the same call as above, however it
@@ -75,8 +69,7 @@ does so with a non-blocking mode and waits maximum 10 seconds for a
 call result. Notice the natural syntax.
 
 >>> from versile.demo import Echoer
->>> from versile.quick import Versile, link_pair
->>> Versile.set_agpl_internal_use()
+>>> from versile.quick import link_pair
 >>> client = link_pair(gw1=None, gw2=Echoer())[0]
 >>> echoer = client.peer_gw()
 >>> call = echoer.echo(u'Slartibartfast', nowait=True)
@@ -84,16 +77,6 @@ call result. Notice the natural syntax.
 u'Slartibartfast'
 >>> client.shutdown()
 
-.. testcleanup::
-
-   from versile.conf import Versile
-   Versile._reset_copyleft()
-
-Global license configuration must be set (once) before links can be
-established, due to technical details of link protocol handshake. This
-was done in these examples with a call to
-``Versile.set_agpl_internal_use()``. See :class:`versile.Versile` for
-details.
 
 Setting up a listening service
 ..............................
@@ -103,47 +86,35 @@ for setting up listening services. Below is a minimalistic example of
 setting up a secure :term:`VOP` service which listens for incoming
 connections. For each new connection a :class:`versile.orb.link.VLink`
 is set up and an *Echoer* gateway object is instantiated and
-passed to the peer. 
+passed to the peer.
 
 For this example we generate a random server keypair, however the keys
 would normally be imported. Notice how little code is required.
 
 >>> from versile.demo import Echoer
->>> from versile.quick import Versile, VOPService, VCrypto, VUrandom
->>> Versile.set_agpl_internal_use()
->>> keypair = VCrypto.lazy().rsa.key_factory.generate(VUrandom(), 1024/8)
+>>> from versile.quick import VOPService, VCrypto, VUrandom
+>>> keypair = VCrypto.lazy().rsa.key_factory.generate(VUrandom(), 1024//8)
 >>> service = VOPService(lambda: Echoer(), auth=None, key=keypair)
 >>> service.start()
 >>> # Simulate (later) service termination on server side
 ... service.stop(True)
-
-.. testcleanup::
-
-   from versile.conf import Versile
-   Versile._reset_copyleft()
 
 Below is a rewritten version which explicitly passes a gateway object
 factory to the service, making the example slightly more readable at
 the expense of a few extra lines.
 
 >>> from versile.demo import Echoer
->>> from versile.quick import Versile, VOPService, VGatewayFactory
+>>> from versile.quick import VOPService, VGatewayFactory
 >>> from versile.quick import VCrypto, VUrandom
->>> keypair = VCrypto.lazy().rsa.key_factory.generate(VUrandom(), 1024/8)
+>>> keypair = VCrypto.lazy().rsa.key_factory.generate(VUrandom(), 1024//8)
 >>> class GwFactory(VGatewayFactory):
 ...     def build(self):
 ...         return Echoer()
-... 
->>> Versile.set_agpl_internal_use()
+...
 >>> service = VOPService(GwFactory(), auth=None, key=keypair)
 >>> service.start()
 >>> # Simulate (later) service termination on server side
 ... service.stop(True)
-
-.. testcleanup::
-
-   from versile.conf import Versile
-   Versile._reset_copyleft()
 
 Listenening services can also be set up by working directly with
 low-level reactor producer/consumer processing elements mechanisms to
@@ -172,9 +143,8 @@ the service could be accessed via :meth:`versile.orb.url.VUrl.resolve`
 as showed in the below example.
 
 >>> from versile.demo import Echoer
->>> from versile.quick import Versile, VOPService, VCrypto, VUrandom, VUrl
->>> Versile.set_agpl_internal_use()
->>> keypair = VCrypto.lazy().rsa.key_factory.generate(VUrandom(), 1024/8)
+>>> from versile.quick import VOPService, VCrypto, VUrandom, VUrl
+>>> keypair = VCrypto.lazy().rsa.key_factory.generate(VUrandom(), 1024//8)
 >>> service = VOPService(lambda: Echoer(), auth=None, key=keypair)
 >>> service.start()
 >>> # Connect to service via URL
@@ -185,11 +155,6 @@ u'Slartibartfast'
 ... echo_gw._v_link.shutdown()
 >>> # Simulate (later) server-side service termination
 ... service.stop(True)
-
-.. testcleanup::
-
-   from versile.conf import Versile
-   Versile._reset_copyleft()
 
 Links can also be set up by working directly with low-level reactor
 producer/consumer processing elements mechanisms to set up an I/O
@@ -218,11 +183,11 @@ example echo service class we imported in the earlier examples. Notice
 the code has very little overhead::
 
     from versile.orb.external import VExternal
-    
+
     @doc
     class MyEchoer(VExternal):
         """Echo service - receive and return objects."""
-    
+
         @publish(show=True, doc=True, ctx=False)
         def echo(self, arg):
             """Returns the received argument."""
@@ -236,8 +201,7 @@ also possible to perform remote inspection of published methods or
 documentation. Below is an example.
 
 >>> from versile.demo import Echoer
->>> from versile.quick import Versile, link_pair
->>> Versile.set_agpl_internal_use()
+>>> from versile.quick import link_pair
 >>> client, server = link_pair(gw1=None, gw2=Echoer())
 >>> service = client.peer_gw()
 >>> type(service)
@@ -254,11 +218,6 @@ u'Returns the received argument.'
 u'Slartibartfast'
 >>> client.shutdown()
 
-.. testcleanup::
-
-   from versile.conf import Versile
-   Versile._reset_copyleft()
-
 Higher Level Data Types
 .......................
 
@@ -268,9 +227,9 @@ types, and it is also possible to define custom data types via the
 peers. Below is an example which passes an immutable dictionary.
 
 >>> from versile.vse.container import VFrozenDict
->>> from versile.quick import Versile, VSEResolver, VExternal
+>>> from versile.quick import VSEResolver, VExternal
 >>> from versile.quick import publish, doc, link_pair
->>> 
+>>>
 >>> @doc
 ... class ExampleService(VExternal):
 ...     """Example service - can return a hardcoded dictionary."""
@@ -278,8 +237,7 @@ peers. Below is an example which passes an immutable dictionary.
 ...     def get_dict(self):
 ...         """Returns a hardcoded dictionary."""
 ...         return VFrozenDict({1:100, 2:150})
-... 
->>> Versile.set_agpl_internal_use()
+...
 >>> VSEResolver.enable_vse()
 >>> client, server = link_pair(gw1=None, gw2=ExampleService())
 >>> service = client.peer_gw()
@@ -292,8 +250,6 @@ peers. Below is an example which passes an immutable dictionary.
 
 .. testcleanup::
 
-   from versile.conf import Versile
-   Versile._reset_copyleft()
    VSEResolver.enable_vse(False)
 
 There is More ...
@@ -330,12 +286,12 @@ example how the reactor framework can be used to run scheduled events.
 >>> reactor = VSelectReactor()
 >>> def output(msg):
 ...     print('Message is: %s' % msg)
-... 
+...
 >>> reactor.start()
 >>> colors = ('red', 'green', 'blue')
 >>> for i in xrange(len(colors)):
 ...     _call = reactor.schedule(0.01*(i+1), output, colors[i])
-... 
+...
 >>> time.sleep(0.1)
 Message is: red
 Message is: green
@@ -359,12 +315,12 @@ threads. Below is a simple example how to set up a processor.
 >>> proc = VProcessor(workers=1)
 >>> def output(msg):
 ...     print('Message is: %s' % msg)
-... 
+...
 >>> colors = ('red', 'green', 'blue')
 >>> _call = proc.queue_call(time.sleep, args=(0.01,))
 >>> for i in xrange(len(colors)):
 ...     _call = proc.queue_call(output, args=(colors[i],))
-... 
+...
 >>> time.sleep(0.1)
 Message is: red
 Message is: green

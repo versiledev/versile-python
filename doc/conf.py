@@ -30,7 +30,7 @@ import sys
 # Adding '.' in path so that release.py can be properly linked
 sys.path.append(os.path.abspath('.'))
 
-from release import version
+from release import version, release
 
 # -- General configuration ----------------------------------------------------
 

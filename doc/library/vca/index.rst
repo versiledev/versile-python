@@ -128,7 +128,7 @@ example how to instantiate a blowfish cipher:
 <class 'versile.crypto.local._VLocalBlowfish'>
 >>> # Equivalent to the above
 ... cipher2 = crypto.blowfish
->>> type(cipher2)     
+>>> type(cipher2)
 <class 'versile.crypto.local._VLocalBlowfish'>
 
 The block chaining modes supported by a cipher is available in
@@ -239,10 +239,10 @@ component and a private component. Typically the private component
 (and the full key pair) is kept secret, whereas the public component
 is made available to other parties. The public key component of a key
 is :attr:`VAsymmetricKey.public` and the private key component is
-:attr:`VAsymmetricKey.private`\ . 
+:attr:`VAsymmetricKey.private`\ .
 
 .. warning::
-   
+
    Using secure keypairs is critical for RSA security. This includes a
    *good source of random data* for creating keys, sufficiently robust
    *primality tests*, and a key of *sufficient key length*\ . Please
@@ -320,11 +320,11 @@ Below is an example of RSA block cipher encryption and decryption:
 >>> rsa = crypto.num_cipher(u'rsa').block_cipher()
 >>> type(rsa)
 <class 'versile.crypto.algorithm.numblock.VNumBlockCipher'>
->>> # Equivalent to the above                                                       
+>>> # Equivalent to the above
 ... rsa = crypto.rsa
 >>> type(rsa)
 <class 'versile.crypto.algorithm.numblock.VNumBlockCipher'>
->>> key = rsa.key_factory.generate(VUrandom(), 512/8)
+>>> key = rsa.key_factory.generate(VUrandom(), 512//8)
 >>> rsa.modes
 (u'cbc',)
 >>> rsa.blocksize(key)
@@ -428,7 +428,7 @@ it is expecting to be completed, and no plaintext is provided.
 ...     dec.done()
 ... except Exception as e:
 ...     print('exception:', e)
-... 
+...
 False
 
 If we modify the above example to keep feeding the decoder data until
@@ -456,7 +456,7 @@ provided by the decoder that has not been validated.
 ...     dec.done()
 ... except Exception as e:
 ...     print('exception:', e)
-... 
+...
 ('exception:', VCryptoException(u'Message failed to verify',))
 
 Decentral Identities
@@ -472,7 +472,7 @@ identity. Identities are generated from a set of secret data
 identity).
 
 .. note::
-   
+
    The decentral identity scheme essentially offers the security
    offered by a public-key based scheme for authentication, combined
    with the convenience of associating the identity to a password
@@ -502,14 +502,14 @@ the identity and should be long and complex.
    it must be much longer to collect the same amount of entropy. See
    the :term:`VDI` specifications for a discussion of security vs
    password length.
-      
+
    A sufficiently strong password is critical. Though computionally
    expensive, for simple passwords the scheme is subject to
    brute-force attacks or dictionary attacks. The trade-off is the
    user must accept memorizing a few (as few as the user wants, though
    at least one) very complex passwords, in return for a highly secure
    set of identities which can be used with multiple services.
-   
+
 Below is an example of generating an identity (effectively an RSA
 keypair) from input data. Note that 512 bit identities are not
 considered 'secure', and identities should probably be minimum 1024
@@ -522,7 +522,7 @@ bits.
 >>> personal = 'I love Monty Python movies'
 >>> password = 'jrWd9j4Lgmf9FD'
 >>> identity = c.dia(bits, purpose, personal, password)
->>> 
+>>>
 >>> from versile.crypto.x509 import VX509Crypto
 >>> exported_id = VX509Crypto.export_public_key(identity.public)
 >>> print(exported_id) #doctest: +NORMALIZE_WHITESPACE
@@ -557,16 +557,16 @@ import/export and creating/validating signatures.
 
 >>> from versile.crypto import VCrypto
 >>> from versile.crypto.x509 import VX509Crypto, VX509Format
->>> # Import RSA keypair                                                            
-... key_pem_data = """                                                              
-... -----BEGIN RSA PRIVATE KEY-----                                                 
-... MIIBOgIBAAJBAJJ44kaPQzDWsZXlHqbDT1xFBOQQ1Ty1EO9l1GCNKd1QhTclRMwN9pNANCeBQYJ2    
-... 7bE/gKZ39NMQ1vsnErp2sJECAwEAAQJBAIiDZBlxQqVNJBxZfBTfKaMMrL9HNQasl0kYdjU6vA8I    
-... o2hamapxjLZho0i7+Fs0dYHRFxbmfWfL7TUG3a0JtXECIQCid3Gm5EhNSzmMEJNyyNH3UVRkHMG5    
-... OxTTFXhhCADBFQIhAObMKoUTpxHBLJEnbJxOCYfID9sRY8Qtlht0tI37APiNAiBmjS7YQdDBuXIh    
-... z3TDR7ABhPzYFK7T1U9Xzn2mAf834QIgNHG4R70LfbFTmzhGKc5hxATl9XWiIfXp4htG2+xpcBEC    
-... ICfax59efa52z/uKBAJ8QQkdKbmvOx5NDfabJbIJ6lbK                                    
-... -----END RSA PRIVATE KEY-----                                                   
+>>> # Import RSA keypair
+... key_pem_data = """
+... -----BEGIN RSA PRIVATE KEY-----
+... MIIBOgIBAAJBAJJ44kaPQzDWsZXlHqbDT1xFBOQQ1Ty1EO9l1GCNKd1QhTclRMwN9pNANCeBQYJ2
+... 7bE/gKZ39NMQ1vsnErp2sJECAwEAAQJBAIiDZBlxQqVNJBxZfBTfKaMMrL9HNQasl0kYdjU6vA8I
+... o2hamapxjLZho0i7+Fs0dYHRFxbmfWfL7TUG3a0JtXECIQCid3Gm5EhNSzmMEJNyyNH3UVRkHMG5
+... OxTTFXhhCADBFQIhAObMKoUTpxHBLJEnbJxOCYfID9sRY8Qtlht0tI37APiNAiBmjS7YQdDBuXIh
+... z3TDR7ABhPzYFK7T1U9Xzn2mAf834QIgNHG4R70LfbFTmzhGKc5hxATl9XWiIfXp4htG2+xpcBEC
+... ICfax59efa52z/uKBAJ8QQkdKbmvOx5NDfabJbIJ6lbK
+... -----END RSA PRIVATE KEY-----
 ... """
 >>> key_pem_data = key_pem_data.strip()
 >>> key = VX509Crypto.import_private_key(key_pem_data, fmt=VX509Format.PEM_BLOCK)
@@ -631,14 +631,14 @@ that second certificate by the Root CA.
 >>> from versile.crypto.x509.cert import VX509CertificationRequest
 >>> # Generate self-signed Root CA certificate
 ... pem = """
-... -----BEGIN RSA PRIVATE KEY-----                                                 
-... MIIBOgIBAAJBAJJ44kaPQzDWsZXlHqbDT1xFBOQQ1Ty1EO9l1GCNKd1QhTclRMwN9pNANCeBQYJ2    
-... 7bE/gKZ39NMQ1vsnErp2sJECAwEAAQJBAIiDZBlxQqVNJBxZfBTfKaMMrL9HNQasl0kYdjU6vA8I    
-... o2hamapxjLZho0i7+Fs0dYHRFxbmfWfL7TUG3a0JtXECIQCid3Gm5EhNSzmMEJNyyNH3UVRkHMG5    
-... OxTTFXhhCADBFQIhAObMKoUTpxHBLJEnbJxOCYfID9sRY8Qtlht0tI37APiNAiBmjS7YQdDBuXIh    
-... z3TDR7ABhPzYFK7T1U9Xzn2mAf834QIgNHG4R70LfbFTmzhGKc5hxATl9XWiIfXp4htG2+xpcBEC    
-... ICfax59efa52z/uKBAJ8QQkdKbmvOx5NDfabJbIJ6lbK                                    
-... -----END RSA PRIVATE KEY-----                                                   
+... -----BEGIN RSA PRIVATE KEY-----
+... MIIBOgIBAAJBAJJ44kaPQzDWsZXlHqbDT1xFBOQQ1Ty1EO9l1GCNKd1QhTclRMwN9pNANCeBQYJ2
+... 7bE/gKZ39NMQ1vsnErp2sJECAwEAAQJBAIiDZBlxQqVNJBxZfBTfKaMMrL9HNQasl0kYdjU6vA8I
+... o2hamapxjLZho0i7+Fs0dYHRFxbmfWfL7TUG3a0JtXECIQCid3Gm5EhNSzmMEJNyyNH3UVRkHMG5
+... OxTTFXhhCADBFQIhAObMKoUTpxHBLJEnbJxOCYfID9sRY8Qtlht0tI37APiNAiBmjS7YQdDBuXIh
+... z3TDR7ABhPzYFK7T1U9Xzn2mAf834QIgNHG4R70LfbFTmzhGKc5hxATl9XWiIfXp4htG2+xpcBEC
+... ICfax59efa52z/uKBAJ8QQkdKbmvOx5NDfabJbIJ6lbK
+... -----END RSA PRIVATE KEY-----
 ... """
 >>> pem = pem.strip()
 >>> root_key = VX509Crypto.import_private_key(pem)
@@ -661,14 +661,14 @@ ZVEjTI3//vQ+OuETYNm5KAnvWgCRH31IUKRko575u37gCHYGSzc=
 -----END CERTIFICATE-----
 >>> # Generate Root-signed certificate
 ... pem = """
-... -----BEGIN RSA PRIVATE KEY-----                                                 
-... MIIBOQIBAAJBAIj0jH/2AtxnNiLfOT1ojx0yOZB8eG5SjGa+TdXEpvKgNF9pqy00x3irntTXH8tg    
-... TWyLHd82khgL7oUe23Gc/FkCAwEAAQJAWppOCKlboyu0qMU8PN/bLdl4M5nkojeCIsZq/6ylNYTD    
-... ZcFMkzL7SkAb/wtdIztLvyMfjrO3HVbNoiWkPl2isQIhAJ5dGBi5QJtKKIElCJZeVIQLDejFXSMe    
-... +tymV4DxE1HPAiEA3WSFF/0PsmvmZP7onEggvgGIvazs7nuGArmnpLwXoVcCICrmmVKJTQFEk7h4    
-... qdzibQ7gV8JJRTPwfpEr1uStakhtAiBAQyA64VLAGH/Myw0b5/fRD0Lww5QWeTZh7h/SOmKliwIg    
-... SCn18UcnxuXgu33Q/9MR/ExWqoNiToc0GFGdu5r46IQ=                                    
-... -----END RSA PRIVATE KEY-----                                                   
+... -----BEGIN RSA PRIVATE KEY-----
+... MIIBOQIBAAJBAIj0jH/2AtxnNiLfOT1ojx0yOZB8eG5SjGa+TdXEpvKgNF9pqy00x3irntTXH8tg
+... TWyLHd82khgL7oUe23Gc/FkCAwEAAQJAWppOCKlboyu0qMU8PN/bLdl4M5nkojeCIsZq/6ylNYTD
+... ZcFMkzL7SkAb/wtdIztLvyMfjrO3HVbNoiWkPl2isQIhAJ5dGBi5QJtKKIElCJZeVIQLDejFXSMe
+... +tymV4DxE1HPAiEA3WSFF/0PsmvmZP7onEggvgGIvazs7nuGArmnpLwXoVcCICrmmVKJTQFEk7h4
+... qdzibQ7gV8JJRTPwfpEr1uStakhtAiBAQyA64VLAGH/Myw0b5/fRD0Lww5QWeTZh7h/SOmKliwIg
+... SCn18UcnxuXgu33Q/9MR/ExWqoNiToc0GFGdu5r46IQ=
+... -----END RSA PRIVATE KEY-----
 ... """
 >>> pem = pem.strip()
 >>> other_key = VX509Crypto.import_private_key(pem)
@@ -719,7 +719,7 @@ certificate from the example ...
             X509v3 extensions:
                 X509v3 Basic Constraints: critical
                     CA:TRUE
-                X509v3 Subject Key Identifier: 
+                X509v3 Subject Key Identifier:
                     B1:D7:A2:C3:F3:B5:68:A9:5F:37:17:AB:E3:2C:79:5F:A5:BC:F5:18
                 X509v3 Key Usage: critical
                     Certificate Sign, CRL Sign
@@ -756,7 +756,7 @@ root-signed certificate.
                         db:71:9c:fc:59
                     Exponent: 65537 (0x10001)
             X509v3 extensions:
-                X509v3 Authority Key Identifier: 
+                X509v3 Authority Key Identifier:
                     keyid:B1:D7:A2:C3:F3:B5:68:A9:5F:37:17:AB:E3:2C:79:5F:A5:BC:F5:18
 
         Signature Algorithm: sha1WithRSAEncryption
@@ -850,7 +850,7 @@ Module API for :mod:`versile.crypto.x509.cert`
     :show-inheritance:
 
 ASN.1 Structures
-................  
+................
 Module API for :mod:`versile.crypto.x509.asn1def.cert` and
 :mod:`versile.crypto.x509.asn1def.pkcs`\ .
 

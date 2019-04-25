@@ -13,28 +13,27 @@ reference, and client-side code for accessing the object.
 
 >>> from versile.vse.native.python import VPythonObject
 >>> from versile.quick import *
->>> 
+>>>
 >>> # Load all VSE modules (including VNativeModule)
 ... VSEResolver.add_imports()
->>> 
+>>>
 >>> class Gateway(VExternal):
 ...     @publish(show=True, doc=True, ctx=False)
 ...     def get_python_list(self):
 ...         """Return a reference to a python list object."""
 ...         l = [5, -2, b'txt', 1.3]
 ...         return VPythonObject(l)
-... 
->>> Versile.set_agpl_internal_use()
+...
 >>> VSEResolver.enable_vse()
 >>> client_link = link_pair(gw1=None, gw2=Gateway())[0]
 >>> gw = client_link.peer_gw()
->>> 
+>>>
 >>> # Retreive a python object reference and activate the proxy interface
 ... obj = gw.get_python_list()
 >>> type(obj)
 <class 'versile.vse.native.python.VPython2'>
 >>> obj._v_activate()
->>> 
+>>>
 >>> # Perform remote operations on the remote list reference
 ... str(obj)
 "[5, -2, 'txt', 1.3]"
@@ -42,13 +41,11 @@ reference, and client-side code for accessing the object.
 >>> obj = obj[2:]
 >>> str(obj)
 "['txt', 1.3, 100]"
->>> 
+>>>
 >>> client_link.shutdown()
 
 .. testcleanup::
 
-   from versile.conf import Versile
-   Versile._reset_copyleft()
    VSEResolver.enable_vse(False)
 
 As the example shows a reference to the remote list object can be

@@ -65,15 +65,15 @@ Combined with proper authentication and authorization (similar to
 e.g. secure shell access to a system) native python access to
 capabilities such as :func:`eval` can be a powerful tool for remote
 system management.
-    
+
 >>> from versile.orb.external import VExternal, publish, doc
->>> from versile.quick import Versile, VCrypto, VUrandom, VOPService, VUrl
+>>> from versile.quick import VCrypto, VUrandom, VOPService, VUrl
 >>> from versile.vse import VSEResolver
 >>> from versile.vse.native.python import VPythonObject
->>> 
+>>>
 >>> # Load VSE modules
 ... VSEResolver.add_imports()
->>> 
+>>>
 >>> @doc
 ... class VulnerableRemoteService(VExternal):
 ...     """A simple service object for receiving and echoing a VEntity."""
@@ -82,14 +82,13 @@ system management.
 ...         """Performs eval on 'cmd'"""
 ...         # WARNING - leaves system vulnerable
 ...         return VPythonObject(eval(cmd))
-... 
->>> Versile.set_agpl_internal_use()
+...
 >>> VSEResolver.enable_vse()
 >>> # Set up remote service with random key
-... key = VCrypto.lazy().rsa.key_factory.generate(VUrandom(), 512/8)
+... key = VCrypto.lazy().rsa.key_factory.generate(VUrandom(), 512//8)
 >>> service = VOPService(lambda: VulnerableRemoteService(), auth=None, key=key)
 >>> service.start()
->>> 
+>>>
 >>> # Interact with remote service
 ... gw = VUrl.parse('vop://localhost/').connect().resolve()
 >>> l = gw.python_eval('[1, 3, 7, True, b\'some_data\', -5, 4, 8]')
@@ -110,15 +109,13 @@ system management.
 >>> l[5] = 123123123
 >>> l
 [8, 4, -5, 'some_data', True, 123123123, 3, 1]
->>> 
+>>>
 >>> # Clean up
 ... gw._v_link.shutdown()
 >>> service.stop(True)
 
 .. testcleanup::
 
-   from versile.conf import Versile
-   Versile._reset_copyleft()
    VSEResolver.enable_vse(False)
 
 Module APIs

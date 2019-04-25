@@ -52,10 +52,9 @@ random server key pair. In this version we also use
 :mod:`versile.quick` to simplify import statements.
 
 >>> from versile.demo import Echoer
->>> from versile.quick import Versile, VOPService, VCrypto, VUrandom
->>> Versile.set_agpl_internal_use()
+>>> from versile.quick import VOPService, VCrypto, VUrandom
 >>> # Create (insecure) example keypair
-... keypair = VCrypto.lazy().rsa.key_factory.generate(VUrandom(), 512/8)
+... keypair = VCrypto.lazy().rsa.key_factory.generate(VUrandom(), 512//8)
 >>> # Set up and start service
 ... gw_factory = lambda: Echoer()
 >>> service = VOPService(gw_factory, auth=None, key=keypair)
@@ -63,13 +62,8 @@ random server key pair. In this version we also use
 >>> # Later, to stop the service:
 ... service.stop(True)
 
-.. testcleanup::
-
-   from versile.conf import Versile
-   Versile._reset_copyleft()
-
 .. note::
-   
+
    :class:`VOPService` takes an *auth* argument which is passed to new
    client links during link construction. See
    :class:`versile.orb.link.VLink` for details how it is used. It is a
@@ -90,10 +84,10 @@ which are also relevant for services.
 Stopping Services
 -----------------
 
-Listening services normally run until they they are explicitly terminated. 
+Listening services normally run until they they are explicitly terminated.
 
 * A service can terminate itself by calling :meth:`versile.orb.service.VService.stop`\ .
-* See the :ref:`daemonize_recipe` recipe for an example how to handle SIGTERM. 
+* See the :ref:`daemonize_recipe` recipe for an example how to handle SIGTERM.
 * A service can be shut down "the hard way" by sending SIGKILL.
 
 Module APIs
@@ -114,4 +108,3 @@ Module API for :mod:`versile.reactor.io.service`
 .. automodule:: versile.reactor.io.service
     :members:
     :show-inheritance:
-

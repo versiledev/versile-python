@@ -44,10 +44,8 @@ as the unauthenticated :ref:`listening_service_recipe` recipe. Below
 is example service code::
 
     from versile.demo import SimpleGateway
-    from versile.quick import Versile, VOPService, VCrypto
+    from versile.quick import VOPService, VCrypto
     from versile.quick import VUrandom, VX509Crypto
-
-    Versile.set_agpl_internal_use()
 
     # We import an identity for the one identity which is authorized to connect
     client_ascii_id = """
@@ -65,7 +63,7 @@ is example service code::
         return (key.keydata == client_id.keydata)
 
     # Set up and start service - here we use a random server keypair
-    keypair = VCrypto.lazy().rsa.key_factory.generate(VUrandom(), 1024/8)
+    keypair = VCrypto.lazy().rsa.key_factory.generate(VUrandom(), 1024//8)
     gw_factory = lambda: SimpleGateway()
     service = VOPService(gw_factory, auth=auth, key=keypair)
     service.start()
@@ -76,10 +74,8 @@ identity's associated secret data, and pass it as a key for the
 :term:`VOP` transport. Below is example client code for connecting
 with a server running with the above server code::
 
-    from versile.quick import Versile, VUrl, VCrypto, VX509Crypto
+    from versile.quick import VUrl, VCrypto, VX509Crypto
 
-    Versile.set_agpl_internal_use()
-    
     # Construct client identity from identity secret data
     purpose  = 'Versily Python Demo Services'
     personal = 'I like Monty Python humor'

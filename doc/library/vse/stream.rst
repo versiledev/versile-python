@@ -127,10 +127,9 @@ is a complete example.
 ... 	    data = b'This byte data will be exposed as a readable stream'
 ... 	    streamer = VByteStreamer.fixed(data, seek_rew=True, seek_fwd=True)
 ... 	    return streamer.proxy()
-...     
->>> Versile.set_agpl_internal_use()
+...
 >>> VSEResolver.enable_vse()
->>> key = VCrypto.lazy().rsa.key_factory.generate(VUrandom(), 512/8)
+>>> key = VCrypto.lazy().rsa.key_factory.generate(VUrandom(), 512//8)
 >>> service = VOPService(lambda: Gateway(), auth=None, key=key)
 >>> service.start()
 >>> # Obtain streamer reference
@@ -148,7 +147,7 @@ True
 ... 	    print(repr(data))
 ... 	else:
 ... 	    break
-... 
+...
 'This byte data will be exposed as a readable stream'
 >>> # Simulate shutting down link and service
 ... gw._v_link.shutdown()
@@ -156,8 +155,6 @@ True
 
 .. testcleanup::
 
-   from versile.conf import Versile
-   Versile._reset_copyleft()
    VSEResolver.enable_vse(False)
 
 :class:`VByteSimpleFileStreamerData` provides a read/write streamer
@@ -182,10 +179,9 @@ a file.
 ...         w_buf = VByteStreamBuffer()
 ...         streamer = VByteStreamer(data, mode, w_buf)
 ...         return streamer.proxy()
-...     
->>> Versile.set_agpl_internal_use()
+...
 >>> VSEResolver.enable_vse()
->>> key = VCrypto.lazy().rsa.key_factory.generate(VUrandom(), 512/8)
+>>> key = VCrypto.lazy().rsa.key_factory.generate(VUrandom(), 512//8)
 >>> service = VOPService(lambda: Gateway(), auth=None, key=key)
 >>> service.start()
 >>> # Obtain streamer reference
@@ -200,7 +196,7 @@ True
 >>> while send_data:
 ...     num_sent = stream.send(send_data)
 ...     send_data = send_data[num_sent:]
-... 
+...
 >>> # Reposition and read written data
 ... stream.rseek(0)
 >>> while True:
@@ -209,7 +205,7 @@ True
 ...         print(repr(data))
 ...     else:
 ...         break
-... 
+...
 'This is data which will be written to the file'
 >>> # Simulate shutting down link and service
 gw._v_link.shutdown()
@@ -217,8 +213,6 @@ gw._v_link.shutdown()
 
 .. testcleanup::
 
-   from versile.conf import Versile
-   Versile._reset_copyleft()
    VSEResolver.enable_vse(False)
 
 In addition to the provided byte streamer data classes, other streamer
@@ -254,10 +248,9 @@ instantiating directly. Below is a complete example.
 ...             streamer = VEntityStreamer.fixed(data, seek_rew=True,
 ...                                              seek_fwd=True)
 ...             return streamer.proxy()
-... 
->>> Versile.set_agpl_internal_use()
+...
 >>> VSEResolver.enable_vse()
->>> key = VCrypto.lazy().rsa.key_factory.generate(VUrandom(), 512/8)
+>>> key = VCrypto.lazy().rsa.key_factory.generate(VUrandom(), 512//8)
 >>> service = VOPService(lambda: Gateway(), auth=None, key=key)
 >>> service.start()
 >>> # Obtain streamer reference
@@ -269,14 +262,14 @@ instantiating directly. Below is a complete example.
 ... stream = streamer.connect(readahead=True)
 >>> stream.wait_status(active=True)
 True
->>> 
+>>>
 >>> while True:
 ...         data = stream.recv(1000)
 ...         if data:
 ...             print(data)
 ...         else:
 ...             break
-... 
+...
 (2.5, False, u'Some Text', (0, 1))
 >>> # Simulate shutting down link and service
 ... gw._v_link.shutdown()
@@ -284,8 +277,6 @@ True
 
 .. testcleanup::
 
-   from versile.conf import Versile
-   Versile._reset_copyleft()
    VSEResolver.enable_vse(False)
 
 :class:`VEntityIteratorStreamerData` implements read-only streamer
@@ -306,10 +297,9 @@ received from the remote streamer.
 ...             data = (2.5, False, u'Some Text', (0, 1))
 ...             streamer = VEntityStreamer.iterator(data)
 ...             return streamer.proxy()
-... 
->>> Versile.set_agpl_internal_use()
+...
 >>> VSEResolver.enable_vse()
->>> key = VCrypto.lazy().rsa.key_factory.generate(VUrandom(), 512/8)
+>>> key = VCrypto.lazy().rsa.key_factory.generate(VUrandom(), 512//8)
 >>> service = VOPService(lambda: Gateway(), auth=None, key=key)
 >>> service.start()
 >>> # Obtain streamer reference
@@ -322,7 +312,7 @@ True
 >>> # Read stream data
 ... for item in stream.iterator():
 ...     print(item)
-... 
+...
 2.5
 False
 Some Text
@@ -333,8 +323,6 @@ Some Text
 
 .. testcleanup::
 
-   from versile.conf import Versile
-   Versile._reset_copyleft()
    VSEResolver.enable_vse(False)
 
 Using Observers
@@ -362,10 +350,9 @@ observer to trigger reading data from the stream.
 ...             streamer = VEntityStreamer.fixed(data, seek_rew=True,
 ...                                              seek_fwd=True)
 ...             return streamer.proxy()
-... 
->>> Versile.set_agpl_internal_use()
+...
 >>> VSEResolver.enable_vse()
->>> key = VCrypto.lazy().rsa.key_factory.generate(VUrandom(), 512/8)
+>>> key = VCrypto.lazy().rsa.key_factory.generate(VUrandom(), 512//8)
 >>> service = VOPService(lambda: Gateway(), auth=None, key=key)
 >>> service.start()
 >>> # Obtain streamer reference
@@ -387,9 +374,9 @@ True
 ...                 print(data)
 ...             else:
 ...                 break
-... 
+...
 >>> observer = MyObserver(stream)
->>> 
+>>>
 >>> # Trigger stream reading
 ... stream.rseek(0)
 >>> time.sleep(0.05) # Wait briefly to let observer print its output
@@ -400,8 +387,6 @@ True
 
 .. testcleanup::
 
-   from versile.conf import Versile
-   Versile._reset_copyleft()
    VSEResolver.enable_vse(False)
 
 

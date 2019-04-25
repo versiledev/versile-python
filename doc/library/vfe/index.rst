@@ -20,7 +20,7 @@ with a '_v_' prefix, even for public methods. The reason for this
 deviation from standard python conventions is to avoid collisions
 between API methods and method names of derived classes for referenced
 objects.
-     
+
 
 Data Types
 ..........
@@ -96,7 +96,7 @@ objects are not.
 ...   VEntity._v_lazy([1, 2, 3])
 ... except:
 ...   print('exception')
-... 
+...
 exception
 
 :class:`VEntity` objects can be converted to a native type with the
@@ -234,7 +234,7 @@ similar to other VEntity objects, except it requires a
 context.
 
 .. warning::
-   
+
    :class:`VObjectIOContext` does not implement handling of object
    dereferences, which needs to be implemented in derived
    classes. E.g. :class:`versile.orb.link.VLink` overrides context
@@ -338,7 +338,7 @@ return values.
 ...         return result
 ...     else:
 ...       raise VCallError(u'Invalid call')
-... 
+...
 >>> adder = Adder()
 >>> # Note that _v_call is normally not called directly, see comments
 ... adder._v_call(u'add', 1, 2, 3, 4, 5)
@@ -347,13 +347,13 @@ return values.
 ...   adder._v_call(u'add', 1, u'not_a_number', 3, 4, 5)
 ... except Exception as e:
 ...   print('exception:', e)
-... 
+...
 ('exception:', (u'Add error',))
 >>> try:
 ...   adder._v_call(u'multiply', 1, 2, 3, 4, 5)
 ... except Exception as e:
 ...   print('exception:', e)
-... 
+...
 ('exception:', VCallError(u'Invalid call',))
 
 .. note::
@@ -385,7 +385,7 @@ call to :meth:`VReference._v_call`\ .
 
 >>> # Various code to set up a link context with a remote object reference
 ... from versile.orb.entity import *
->>> from versile.quick import Versile, link_pair
+>>> from versile.quick import link_pair
 >>> class Adder(VObject):
 ...   def _v_execute(self, *args, **kargs):
 ...     if len(args) >= 2 and args[0] == u'add':
@@ -397,8 +397,7 @@ call to :meth:`VReference._v_call`\ .
 ...         return result
 ...     else:
 ...       raise VCallError(u'Invalid call')
-... 
->>> Versile.set_agpl_internal_use()
+...
 >>> l1, l2 = link_pair(None, Adder())
 >>> remote = l1.peer_gw()
 >>> # This line is here because 'remote' is a VProxy
@@ -410,11 +409,6 @@ call to :meth:`VReference._v_call`\ .
 15
 >>> # Overhead code for shutting down the link
 ... l1.shutdown()
-
-.. testcleanup::
-
-   from versile.conf import Versile
-   Versile._reset_copyleft()
 
 So the pieces are starting to come together; when the appropriate link
 and processor infrastructure is set up, method calls on
@@ -465,9 +459,9 @@ call is now being performed directly on the proxy object. Notice how
 we call add() on 'remote' which is a proxy for the remote object
 reference, just as if it had been a local object.
 
->>> # Initialization code to set up a link with a remote object reference     
+>>> # Initialization code to set up a link with a remote object reference
 ... from versile.orb.entity import *
->>> from versile.quick import Versile, link_pair
+>>> from versile.quick import link_pair
 >>> class Adder(VObject):
 ...   def _v_execute(self, *args, **kargs):
 ...     if len(args) >= 2 and args[0] == u'add':
@@ -479,8 +473,7 @@ reference, just as if it had been a local object.
 ...         return result
 ...     else:
 ...       raise VCallError(u'Invalid call')
-... 
->>> Versile.set_agpl_internal_use()
+...
 >>> l1, l2 = link_pair(None, Adder())
 >>> remote = l1.peer_gw()
 >>> # HERE WE INTERACT WITH THE REMOTE OBJECT VIA A VPROXY
@@ -490,18 +483,13 @@ reference, just as if it had been a local object.
 15
 >>> l1.shutdown()
 
-.. testcleanup::
-
-   from versile.conf import Versile
-   Versile._reset_copyleft()
-
 The reference to 'add' generates a callable which will trigger the
 appropriate remote call for this method name. The below code shows
 what is going on:
 
 >>> # Set up link
 ... from versile.orb.entity import *
->>> from versile.quick import Versile, link_pair
+>>> from versile.quick import link_pair
 >>> class Adder(VObject):
 ...   def _v_execute(self, *args, **kargs):
 ...     if len(args) >= 2 and args[0] == u'add':
@@ -513,8 +501,7 @@ what is going on:
 ...         return result
 ...     else:
 ...       raise VCallError(u'Invalid call')
-... 
->>> Versile.set_agpl_internal_use()
+...
 >>> l1, l2 = link_pair(None, Adder())
 >>> remote = l1.peer_gw()
 >>> # Demonstrated functionality
@@ -529,11 +516,6 @@ what is going on:
 15
 >>> # Shut down link
 ... l1.shutdown()
-
-.. testcleanup::
-
-   from versile.conf import Versile
-   Versile._reset_copyleft()
 
 A proxy can be created from a :class:`VObject` or :class:`VReference`
 via the :meth:`VObject._v_proxy` method. The object or reference can
@@ -562,7 +544,7 @@ earlier remote method call could be performed in non-blocking mode.
 
 >>> # Set up link
 ... from versile.orb.entity import *
->>> from versile.quick import Versile, link_pair
+>>> from versile.quick import link_pair
 >>> class Adder(VObject):
 ...   def _v_execute(self, *args, **kargs):
 ...     if len(args) >= 2 and args[0] == u'add':
@@ -574,8 +556,7 @@ earlier remote method call could be performed in non-blocking mode.
 ...         return result
 ...     else:
 ...       raise VCallError(u'Invalid call')
-... 
->>> Versile.set_agpl_internal_use()
+...
 >>> l1, l2 = link_pair(None, Adder())
 >>> remote = l1.peer_gw()
 >>> # Demonstrated functionality
@@ -585,11 +566,6 @@ earlier remote method call could be performed in non-blocking mode.
 15
 >>> # Shut down link
 ... l1.shutdown()
-
-.. testcleanup::
-
-   from versile.conf import Versile
-   Versile._reset_copyleft()
 
 
 Module APIs

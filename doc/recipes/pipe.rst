@@ -24,13 +24,10 @@ output providing access to a :mod:`versile.demo` example gateway::
 
     import sys
 
-    from versile.conf import Versile
     from versile.demo import SimpleGateway
     from versile.reactor.io.link import VLinkAgent
     from versile.reactor.io.pipe import VPipeAgent
 
-    Versile.set_agpl_internal_use()
-    
     # Set up a link on stdin/stdout
     link = VLinkAgent(gateway=SimpleGateway())
     pipe = VPipeAgent(link.reactor, sys.stdin.fileno(), sys.stdout.fileno())
@@ -52,12 +49,10 @@ provided by the program::
     import os
     import subprocess
 
-    from versile.quick import Versile, VUrl
+    from versile.quick import VUrl
     from versile.reactor.io.link import VLinkAgent
     from versile.reactor.io.pipe import VPipeAgent
-    
-    Versile.set_agpl_internal_use()
-    
+
     # Create a pipe for sub-process communication
     rd, peer_wr = os.pipe()
     peer_rd, wr = os.pipe()
@@ -93,18 +88,16 @@ remotely over ssh::
     import os
     import subprocess
 
-    from versile.quick import Versile, VUrl
+    from versile.quick import VUrl
     from versile.reactor.io.link import VLinkAgent
     from versile.reactor.io.pipe import VPipeAgent
-    
-    Versile.set_agpl_internal_use()
-    
+
     # Create a pipe for sub-process communication
     rd, peer_wr = os.pipe()
     peer_rd, wr = os.pipe()
 
     # Initiate child subprocess
-    child = subprocess.Popen(['ssh', 'ssh.example.com', '/tmp/link_prg'], 
+    child = subprocess.Popen(['ssh', 'ssh.example.com', '/tmp/link_prg'],
                               stdin=peer_rd, stdout=peer_wr)
 
     # Set up link interaction from the master side

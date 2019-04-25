@@ -45,7 +45,7 @@ __all__ = ['IVClientSocket', 'IVSocket', 'VClientSocket',
 __all__ = _vexport(__all__)
 
 # Workaround for Windows-specific error codes
-if sys.platform == b'win32' or _vplatform == 'ironpython':
+if sys.platform == _b2s(b'win32') or _vplatform == 'ironpython':
     _errno_block   = (errno.EWOULDBLOCK, errno.WSAEWOULDBLOCK)
     _errno_connect = (errno.EINPROGRESS, errno.WSAEWOULDBLOCK)
 else:

@@ -35,7 +35,7 @@ A service can be set up with multiple service instances listening on
 the same bound socket (on Unix-based systems) by setting up the
 following service structure:
 
-* A :class:`VServiceController` controls all service nodes and load balances 
+* A :class:`VServiceController` controls all service nodes and load balances
   nodes
 * The controller instantiates service node processes with links to the
   controller
@@ -44,13 +44,13 @@ following service structure:
   :class:`VServiceController`
 
 .. warning::
-   
+
    The example in this recipe is simplified as it does not implement a
    mechanism and logic for shutting down the network, instead we just
    close it after 60 seconds. Alternatives include e.g. using the
    :ref:`daemonize_recipe` recipe on the controller process to trigger
    service shutdown.
-   
+
 Below is example code for setting up a service on four processes::
 
     #!/usr/bin/env python
@@ -68,21 +68,18 @@ Below is example code for setting up a service on four processes::
         """Set up controlled listening service and a link to the controller."""
 
         # Set up a listening service on l_sock controlled by a VServiceNode
-	Versile.set_agpl_internal_use()
-        node = VServiceNode()    
+        node = VServiceNode()
         service = VOPService(lambda: Echoer(), auth=None, sock=l_sock,
                              key=server_key, node=node)
 
         # Set up a link to the service controller, passing the node as the gw
         link = socket_vtp_link(sock=cntl_sock, gw=node, internal=True)
-        
+
         # Wait for service to shut down before returning (which ends process)
         service.wait(stopped=True)
         link.shutdown()
 
     def main():
-        Versile.set_agpl_internal_use()
-	
         # Create a listening socket and service controller
         server_listen_sock = VOPService.create_socket()
         controller = VServiceController()
@@ -93,7 +90,7 @@ Below is example code for setting up a service on four processes::
         reactor.start()
 
         # Generate a (random) key for the server VOP transport
-        keypair = VCrypto.lazy().rsa.key_factory.generate(VUrandom(), 1024/8)
+        keypair = VCrypto.lazy().rsa.key_factory.generate(VUrandom(), 1024//8)
 
         # Start service nodes in new processes
         processes = []

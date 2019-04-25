@@ -59,16 +59,16 @@ dist: preprocessed/
 
 aprep: aprep2 aprep3
 
-aprep2: preprocessed/versile-python2-$(RELEASE)
+aprep2: preprocessed_v2
 
-aprep3: preprocessed/versile-python3-$(RELEASE)
+aprep3: preprocessed_v3
 
-preprocessed/versile-python2-$(RELEASE)/: _release
+preprocessed_v2: _release
 	if [ ! -d preprocessed/ ] ; then mkdir preprocessed/ ; fi
 	rm -rf preprocessed/versile-pythons-$(RELEASE)/
 	./release.py 2 . preprocessed/
 
-preprocessed/versile-python3-$(RELEASE)/: _release
+preprocessed_v3: _release
 	if [ ! -d preprocessed/ ] ; then mkdir preprocessed/ ; fi
 	rm -rf preprocessed/versile-python3-$(RELEASE)/
 	./release.py 3 . preprocessed/

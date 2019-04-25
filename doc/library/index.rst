@@ -12,7 +12,7 @@ are considered internal to the platform.
    :hidden:
    :maxdepth: 1
    :glob:
-   
+
    quick/index
    global/index
    vfe/index
@@ -32,7 +32,6 @@ are considered internal to the platform.
    reactor/io
    common/index
    demo/index
-   temp/index
 
 .. only:: html
 
@@ -55,4 +54,3 @@ are considered internal to the platform.
     * :doc:`reactor/io`
     * :doc:`common/index`
     * :doc:`demo/index`
-    * :doc:`temp/index`

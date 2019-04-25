@@ -25,8 +25,7 @@ If the service from recipe ':ref:`listening_service_recipe`\ ' is
 running on the system, the following code will resolve a :term:`VRI`
 reference to a :term:`VOP` echo service resource::
 
-    from versile.quick import Versile, VUrl
-    Versile.set_agpl_internal_use()
+    from versile.quick import VUrl
     echo_gw = VUrl.resolve('vop://localhost/text/echo/')
     print(echo_gw.echo('Please return this message'))
     del(echo_gw)
@@ -54,8 +53,7 @@ the existing link.
 Below is an example which performs relative VRI resolution with
 explicit link shutdown::
 
-    from versile.quick import Versile, VUrl
-    Versile.set_agpl_internal_use()
+    from versile.quick import VUrl
     gw = VUrl.resolve('vop://localhost/')
     echo_gw = VUrl.relative(gw, '/text/echo/')
     print(echo_gw.echo('Please return this message'))
@@ -66,8 +64,7 @@ an example how this can be done. Note that due to asynchronous DNS
 resolution effects this consumes one thread per pending peer-connect
 operation. Below is an example of non-blocking resolution::
 
-    from versile.quick import Versile, VUrl
-    Versile.set_agpl_internal_use()
+    from versile.quick import VUrl
     call = VUrl.resolve('vop://localhost/text/echo/', nowait=True)
     echo_gw = call.result(timeout=10.0)
     print(echo_gw.echo('Please return this message'))
@@ -80,12 +77,10 @@ with :meth:`versile.orb.url.VUrl.vri`\ . Below is an example of
 including a *query* to perform a remote call as part of :term:`VRI`
 resolution::
 
-    from versile.quick import Versile, VUrl
-    Versile.set_agpl_internal_use()
+    from versile.quick import VUrl
     url = VUrl.vri('vtps', 'localhost', ('text', 'echo'), query_name='echo',
                    query_args=('Please return this message',))
     call = VUrl.resolve(url, nowait=True)
     return_msg = call.result(timeout=10.0)
     print(return_msg)
     call = None
-

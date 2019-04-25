@@ -15,9 +15,9 @@ type which holds a first name and last name. The class overloads
 ``_v_encode`` in order to provide a :term:`VER` serialized
 representation, and has a class method for reconstructing from a
 tagged-value represented object::
-    
+
     from versile.quick import VEntity
-    
+
     class Person(VEntity):
         def __init__(self, firstname, lastname):
             super(Person, self).__init__()
@@ -49,7 +49,7 @@ type decoding capabilities. Below is a module which can decode the
 *Person* class::
 
     from versile.orb.module import VModuleResolver, VModule, VModuleDecoder
-    
+
     class CustomModule(VModule):
         def __init__(self):
             super(CustomModule, self).__init__()
@@ -62,7 +62,7 @@ passes *Person* data over a link.
 
 >>> from versile.quick import *
 >>> from versile.orb.module import VModuleResolver, VModule, VModuleDecoder
->>> 
+>>>
 >>> class Person(VEntity):
 ...     def __init__(self, firstname, lastname):
 ...         super(Person, self).__init__()
@@ -82,39 +82,33 @@ passes *Person* data over a link.
 ...             args = VEntity._v_lazy_native(args)
 ...             return cls(*args)
 ...         return (_assemble, list(value))
-... 
+...
 >>> class CustomModule(VModule):
 ...     def __init__(self):
 ...         super(CustomModule, self).__init__()
 ...         _entry = VModuleDecoder(name=(u'custom', u'person'), ver=(1, 0),
 ...                                 oid=None, decoder=Person._v_ver_decode)
 ...         self.add_decoder(_entry)
-... 
+...
 >>> # Register as a globally available module
 ... _module = CustomModule()
 >>> VModuleResolver.add_import(_module)
->>> 
+>>>
 >>> class Gateway(VExternal):
 ...     @publish(show=True, ctx=False)
 ...     def person(self, firstname, lastname):
 ...         return Person(firstname, lastname)
-... 
->>> Versile.set_agpl_internal_use()
+...
 >>> client_link = link_pair(gw1=None, gw2=Gateway())[0]
 >>> gw = client_link.peer_gw()
->>> 
+>>>
 >>> obj = gw.person(u'John', u'Doe')
 >>> type(obj)
 <class 'Person'>
 >>> obj.name
 (u'John', u'Doe')
->>> 
+>>>
 >>> client_link.shutdown()
-
-.. testcleanup::
-
-   from versile.conf import Versile
-   Versile._reset_copyleft()
 
 Because we registered *CustomModule* as a globally available module
 before the link is instantiated, each link adds the module to its set
