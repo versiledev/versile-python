@@ -18,7 +18,7 @@ reference, and client-side code for accessing the object.
 ... VSEResolver.add_imports()
 >>>
 >>> class Gateway(VExternal):
-...     @publish(show=True, doc=True, ctx=False)
+...     @publish(show=True, doc=True)
 ...     def get_python_list(self):
 ...         """Return a reference to a python list object."""
 ...         l = [5, -2, b'txt', 1.3]

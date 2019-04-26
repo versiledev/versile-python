@@ -25,14 +25,6 @@ Service Classes
 :term:`VPy` provides the reactor based :class:`VOPService`
 implementation of the :term:`VOP` protocol.
 
-.. note::
-
-    Due to technical details of the :term:`VOL` protocol for a link
-    handshake, global license information must be set on
-    :class:`versile.Versile` before any service inherited from
-    :class:`versile.orb.service.VService` can be constructed. See
-    :class:`versile.Versile` for more information.
-
 The minimum information required for setting up a service is a factory
 for link gateway objects. There are several other arguments and
 methods that can be overloaded to further customize service object

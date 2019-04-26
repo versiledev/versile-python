@@ -132,7 +132,7 @@ def doc_with(doc):
         return c
     return decor
 
-def publish(name=None, doc=False, show=False, ctx=True):
+def publish(name=None, doc=False, show=False, ctx=False):
     """Decorator for publishing a :class:`VExternal` method externally.
 
     Keyword arguments:
@@ -154,11 +154,11 @@ def publish(name=None, doc=False, show=False, ctx=True):
     Example use::
 
         class MyClass(VExternal):
-            @publish(name=u'my_method_a', show=True, doc=True, ctx=False)
+            @publish(name=u'my_method_a', show=True, doc=True)
             def a_method(self, arg1, arg2):
                 \"\"\"This doc string will be published\"\"\"
                 pass
-            @publish()
+            @publish(ctx=True)
             def my_method_b(self, arg1, arg2, ctx=None):
                 pass
 
@@ -356,7 +356,7 @@ class VExternal(VObject):
             else:
                 raise VCallError('Not a provided meta method')
 
-    def _v_publish(self, method, name=None, doc=False, ctx=True, show=False):
+    def _v_publish(self, method, name=None, doc=False, ctx=False, show=False):
         """Publishes a method, making it externally callable.
 
         :param method: the method to publish

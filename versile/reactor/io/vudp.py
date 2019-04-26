@@ -1436,7 +1436,7 @@ class VUDPRelayedVOPConnecter(VExternal):
                     _handler._cancel()
         self._peer_gw = Result(self)
 
-    @publish(show=True, ctx=False)
+    @publish(show=True)
     def confirm_udp(self, host, port):
         if self._num_confirm_calls != 0:
             raise VException('May only call confirm_udp once')
@@ -1446,7 +1446,7 @@ class VUDPRelayedVOPConnecter(VExternal):
         # This will stop UDP handshake re-transmission
         self._external_udp = (host, port)
 
-    @publish(show=True, ctx=False)
+    @publish(show=True)
     def link_to_peer(self, host, port, l_sec, r_sec):
         if self._num_link_calls != 0:
             raise VException('May only call link_to_peer once')
@@ -1621,7 +1621,7 @@ class VUDPRelayedVOPApprover(VExternal):
         self._udp_filter = udp_filter
         self._rand = VUrandom()
 
-    @publish(show=True, ctx=False)
+    @publish(show=True)
     def approve(self, path, host, port, r_token, client_ip,
                 client_key, client_certs):
         """Remote method called by link to initiate UDP based service.

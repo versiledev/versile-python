@@ -95,7 +95,7 @@ passes *Person* data over a link.
 >>> VModuleResolver.add_import(_module)
 >>>
 >>> class Gateway(VExternal):
-...     @publish(show=True, ctx=False)
+...     @publish(show=True)
 ...     def person(self, firstname, lastname):
 ...         return Person(firstname, lastname)
 ...

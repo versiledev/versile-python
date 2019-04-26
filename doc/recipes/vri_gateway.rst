@@ -19,12 +19,12 @@ included in the :mod:`versile.demo` module)::
 
     from versile.demo import Echoer, Adder
     from versile.quick import *
-    
+
     @doc
     class SimpleGateway(VExternal):
         """A simple directory which can provide an echo service resource."""
-        
-        @publish(show=True, doc=True, ctx=False)
+
+        @publish(show=True, doc=True)
         def urlget(self, path):
             """Provides VRI-based access to some service objects."""
             if path == (u'text', u'echo'):

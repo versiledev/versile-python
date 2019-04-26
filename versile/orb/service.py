@@ -501,7 +501,7 @@ class VServiceController(VExternal):
         self._max_clients = max_clients
         self._max_node_clients = max_node_clients
 
-    @publish(show=True, doc=True, ctx=False)
+    @publish(show=True, doc=True)
     def accepted(self, node):
         """Callback from a node informing it accepted a client connection.
 
@@ -521,7 +521,7 @@ class VServiceController(VExternal):
                 self._approved.discard(node)
             self.__process()
 
-    @publish(show=True, doc=True, ctx=False)
+    @publish(show=True, doc=True)
     def closed(self, node):
         """Callback from a node informing a client connection was closed.
 
@@ -649,7 +649,7 @@ class VServiceNode(VExternal):
         self._service = None
         self._cntl = None
 
-    @publish(show=True, doc=True, ctx=False)
+    @publish(show=True, doc=True)
     def start_service(self, cntl):
         """Registers a controller and starts the node's service.
 
@@ -667,7 +667,7 @@ class VServiceNode(VExternal):
             self._cntl = cntl
             self._service.start()
 
-    @publish(show=True, doc=True, ctx=False)
+    @publish(show=True, doc=True)
     def stop_service(self, stop_links, force):
         """Requests the node's service to stop.
 
@@ -682,7 +682,7 @@ class VServiceNode(VExternal):
             self._service = None
             self._cntl = None
 
-    @publish(show=True, doc=True, ctx=False)
+    @publish(show=True, doc=True)
     def can_accept(self):
         """Authorizes the node's service to accept a single client connection.
 

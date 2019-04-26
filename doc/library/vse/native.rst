@@ -77,7 +77,7 @@ system management.
 >>> @doc
 ... class VulnerableRemoteService(VExternal):
 ...     """A simple service object for receiving and echoing a VEntity."""
-...     @publish(show=True, doc=True, ctx=False)
+...     @publish(show=True, doc=True)
 ...     def python_eval(self, cmd):
 ...         """Performs eval on 'cmd'"""
 ...         # WARNING - leaves system vulnerable

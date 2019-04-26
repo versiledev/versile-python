@@ -1030,7 +1030,7 @@ class VStreamer(VExternal):
         streamdata.set_streamer(self)
         streamdata.enable_notifications(VStreamerData.NOTIFY_ENDPOINTS)
 
-    @publish(show=True, ctx=False)
+    @publish(show=True)
     def peer_connect(self, peer, call_lim, r_num, r_size):
         """Connect a peer stream object with the streamer.
 
@@ -1093,7 +1093,7 @@ class VStreamer(VExternal):
             res = VEntity._v_lazy(res)
             return res
 
-    @publish(show=True, ctx=False)
+    @publish(show=True)
     def peer_read_start(self, msg_id, pos, pos_ref, eos):
         """Initiate a read context.
 
@@ -1153,7 +1153,7 @@ class VStreamer(VExternal):
             handler, calldata = self._peer_rstart, (msg_id, pos, pos_ref, eos)
             return self._calls.queue(msg_id, handler, calldata)
 
-    @publish(show=True, ctx=False)
+    @publish(show=True)
     def peer_write_start(self, msg_id, pos, pos_ref):
         """Initiate a write context.
 
@@ -1207,7 +1207,7 @@ class VStreamer(VExternal):
             handler, calldata = self._peer_wstart, (msg_id, pos, pos_ref)
             return self._calls.queue(msg_id, handler, calldata)
 
-    @publish(show=True, ctx=False)
+    @publish(show=True)
     def peer_read_lim(self, msg_id, rel_pos):
         """Sets a new read push limit for the current read context.
 
@@ -1240,7 +1240,7 @@ class VStreamer(VExternal):
             if self._failed or self._done: return
             return self._calls.queue(msg_id, self._peer_rlim, (rel_pos,))
 
-    @publish(show=True, ctx=False)
+    @publish(show=True)
     def peer_write_push(self, msg_id, write_ctx, data):
         """Pushes write data to an active write context.
 
@@ -1290,7 +1290,7 @@ class VStreamer(VExternal):
             handler, calldata = self._peer_wpush, (write_ctx, data)
             return self._calls.queue(msg_id, handler, calldata)
 
-    @publish(show=True, ctx=False)
+    @publish(show=True)
     def peer_trunc_before(self, msg_id):
         """Truncates all stream data before current position.
 
@@ -1323,7 +1323,7 @@ class VStreamer(VExternal):
             return self._calls.queue(msg_id, self._peer_trunc_before,
                                      (msg_id,))
 
-    @publish(show=True, ctx=False)
+    @publish(show=True)
     def peer_trunc_after(self, msg_id):
         """Truncates all stream data after current position.
 
@@ -1359,7 +1359,7 @@ class VStreamer(VExternal):
                 self._fail(msg='Illecal truncate operation') ; return
             return self._calls.queue(msg_id, self._peer_trunc_after, (msg_id,))
 
-    @publish(show=True, ctx=False)
+    @publish(show=True)
     def peer_close(self, msg_id):
         """Closes the stream connection.
 
@@ -1389,7 +1389,7 @@ class VStreamer(VExternal):
             if self._failed or self._done: return
             return self._calls.queue(msg_id, self._peer_close, tuple())
 
-    @publish(show=True, ctx=False)
+    @publish(show=True)
     def peer_fail(self, msg_id, msg=None):
         """Informs the streamer the stream connection has failed.
 
@@ -2691,7 +2691,7 @@ class VStreamPeer(VExternal):
 
         self._observers = set()
 
-    @publish(show=True, ctx=False)
+    @publish(show=True)
     def peer_set_start_pos(self, msg_id, ctx, pos):
         """Notify of streamer's start position of the current context.
 
@@ -2728,7 +2728,7 @@ class VStreamPeer(VExternal):
             handler, calldata = self._peer_set_start_pos, (ctx, pos)
             return self._calls.queue(msg_id, handler, calldata)
 
-    @publish(show=True, ctx=False)
+    @publish(show=True)
     def peer_read_push(self, msg_id, read_ctx, data, eos):
         """Pushes read data to a read context.
 
@@ -2780,7 +2780,7 @@ class VStreamPeer(VExternal):
             handler, calldata = self._peer_rpush, (read_ctx, data, eos)
             return self._calls.queue(msg_id, handler, calldata)
 
-    @publish(show=True, ctx=False)
+    @publish(show=True)
     def peer_write_lim(self, msg_id, write_ctx, rel_pos):
         """Sets a new write push limit for the current read context.
 
@@ -2817,7 +2817,7 @@ class VStreamPeer(VExternal):
             calldata = (write_ctx, rel_pos)
             return self._calls.queue(msg_id, self._peer_wlim, calldata)
 
-    @publish(show=True, ctx=False)
+    @publish(show=True)
     def peer_closed(self, msg_id):
         """Acknowledges a peer streamer has closed the stream.
 
@@ -2846,7 +2846,7 @@ class VStreamPeer(VExternal):
             if self._failed or self._closed: return
             return self._calls.queue(msg_id, self._peer_closed, tuple())
 
-    @publish(show=True, ctx=False)
+    @publish(show=True)
     def peer_fail(self, msg_id, msg=None):
         """Informs the streamer the stream connection has failed.
 
@@ -2881,7 +2881,7 @@ class VStreamPeer(VExternal):
             if self._failed or self._closed: return
             return self._calls.queue(msg_id, self._peer_fail, (msg,))
 
-    @publish(show=True, ctx=False)
+    @publish(show=True)
     def peer_error(self, msg_id, ctx, code):
         """Notifies of an error condition on a context.
 

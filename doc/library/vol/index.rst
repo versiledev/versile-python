@@ -16,7 +16,7 @@ protocol. Links enable applications to interact with remote services
 and exchange data using higher-level data types.
 
 .. note::
-   
+
    :class:`VLink` is an abstract class that should not be instantiated
    directly, as it relies on derived classes to implement link
    functionality. :term:`VPy` provides an implementation of
@@ -36,13 +36,6 @@ Link I/O
 to define an I/O subsystem. A link interacts with its peer by
 exchanging serialized :class:`versile.orb.entity.VEntity` data using
 the standard link protocol.
-
-.. note::
-
-    Due to technical details of the :term:`VOL` protocol for a link
-    handshake, global license information must be set on
-    :class:`versile.Versile` before a :class:`VLink` can be
-    constructed. See :class:`versile.Versile` for more information.
 
 When serializing :ref:`lib_entities`\ , a context object is required
 for serializing and reconstructing byte data. :class:`VLink` is a
@@ -69,12 +62,12 @@ after a local gateway object has been sent to the link peer and a
 *peer gateway object* has been received from the peer.
 
 .. note::
-   
+
    The local gateway object sent to the peer must be a
    :class:`versile.orb.entity.VObject` and gateway object received
    from peer must be a :class:`versile.orb.entity.VReference` (which
    may be lazy-converted).
-   
+
 For a standard :term:`VOL` handshake the default handshake should be
 used, however it is possible to use an alternative handshake by
 overloading :meth:`VLink._create_handshake_obj` and sub-classing
@@ -95,7 +88,7 @@ alternatively be retreived as an asynchronous call result with the
 non-blocking :meth:`VLink.async_gw`\ method.
 
 .. warning::
-   
+
    :meth:`VLink.peer_gw` or :meth:`VLink.async_gw` reliably produce a
    gateway object only the first time it is called. When a gateway is
    returned the :class:`VLink` replaces its internal reference to the
@@ -179,4 +172,3 @@ Module API for :mod:`versile.reactor.io.link`
 .. automodule:: versile.reactor.io.link
     :members:
     :show-inheritance:
-

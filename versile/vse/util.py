@@ -121,7 +121,7 @@ class VFunction(VERBase, VExternal):
         """Returns *function(\*args)*\ ."""
         return self._func(*args)
 
-    @publish(show=True, ctx=False)
+    @publish(show=True)
     def peer_call(self, *args):
         """Perform function call.
 
@@ -141,7 +141,7 @@ class VFunction(VERBase, VExternal):
 
         return func(*args)
 
-    @publish(show=True, ctx=False)
+    @publish(show=True)
     def peer_doc(self):
         """Return function documentation string.
 

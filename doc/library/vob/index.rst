@@ -48,18 +48,18 @@ decorator per method::
             super(Adder, self).__init__()
             self.__sum = 0
 
-        @publish(show=True, doc=True, ctx=False)
+        @publish(show=True, doc=True)
         def add(self, number):
             """Adds to rolling sum, usage add(number)."""
             with self:
                 self.__sum += number
 
-        @publish(show=True, doc=True, ctx=False)
+        @publish(show=True, doc=True)
         def result(self):
             """Returns rolling sum result, usage result()."""
             with self:
                 return self.__sum
-        
+
         def private_method(self):
             """This method is not externally visible."""
             pass
@@ -82,26 +82,26 @@ Below is an alternative implementation which does not publish any
 documentation and which takes context arguments::
 
     from versile.orb.external import *
-    
+
     class AlternativeAdder(VExternal):
         """This doc is not published externally."""
-	
+
         def __init__(self):
 	    super(AlternativeAdder, self).__init__()
             self.__sum = 0
-	    
-        @publish(show=True)
+
+        @publish(show=True, ctx=True)
         def add(self, number, ctx=None):
             """This doc is not published externally."""
             with self:
 	        self.__sum += number
-		
-        @publish(show=True)
+
+        @publish(show=True, ctx=True)
         def result(self, ctx=None):
             """This doc is not published externally."""
             with self:
                 return self.__sum
-		
+
         def private_method(self):
             """This method is not externally visible."""
             pass
@@ -123,7 +123,7 @@ class can be accessed via a :class:`versile.orb.entity.VProxy`\ .
 >>> proxy = adder._v_proxy()
 >>> for i in xrange(10):
 ...     _temp_result = proxy.add(i)
-... 
+...
 >>> proxy.result()
 45
 
@@ -182,14 +182,14 @@ uses only the external interface, even if the object exists locally.
 ...     def __init__(self):
 ...         super(YouGetOnlyTwoShots, self).__init__()
 ...         self._shots_left = 2
-...     @publish(show=True, ctx=False)
+...     @publish(show=True)
 ...     def shoot(self):
 ...         with self:
 ...             self._shots_left -= 1
 ...             if self._shots_left == 0:
 ...                 self._v_unpublish(self.shoot)
 ...             return u'Nice shooting!'
-... 
+...
 >>> shooter = YouGetOnlyTwoShots()._v_proxy()
 >>> while True:
 ...     try:
@@ -199,7 +199,7 @@ uses only the external interface, even if the object exists locally.
 ...         break
 ...     else:
 ...         print(result)
-... 
+...
 Nice shooting!
 Nice shooting!
 Could not shoot, aborting
@@ -228,7 +228,7 @@ simple example:
 ...   vchk(arg, vtyp(unicode))
 ... except:
 ...   print('This check threw an exception')
-... 
+...
 This check threw an exception
 
 The :func:`vchk` function can take single-argument validation
@@ -270,13 +270,13 @@ arguments raise exceptions which prevent the method from executing.
 >>> from versile.orb.external import *
 >>> from versile.orb.validate import *
 >>> class PosIntAdder(VExternal):
-...     @publish(show=True, ctx=False)
+...     @publish(show=True)
 ...     def add(self, m, n):
 ...         # Validate input arguments
 ...         for arg in m, n:
 ...             vchk(arg, vtyp(u'int'), vmin(1))
 ...         return m + n
-... 
+...
 >>> adder = PosIntAdder()._v_proxy()
 >>> adder.add(10, 23)
 33
@@ -287,7 +287,7 @@ arguments raise exceptions which prevent the method from executing.
 ...         print('Exception adding', args)
 ...     else:
 ...         print('Added', args, 'result', result)
-... 
+...
 ('Added', (10, 23), 'result', 33)
 ('Exception adding', (0, 4))
 ('Exception adding', (5, -1))

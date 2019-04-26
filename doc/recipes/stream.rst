@@ -33,12 +33,12 @@ a stream. Below is a modified (and simplified) class::
             super(NameSorter, self).__init__()
             self._names = []
 
-        @publish(ctx=False)
+        @publish()
         def add(self, name):
             with self:
                 self._names.append(name)
 
-        @publish(ctx=False)
+        @publish()
         def reset(self):
             with self:
                 names, self._names = self._names, []
@@ -55,11 +55,11 @@ used to iterate through all stream data.
 ...     def __init__(self):
 ...         super(NameSorter, self).__init__()
 ...         self._names = []
-...     @publish(ctx=False)
+...     @publish()
 ...     def add(self, name):
 ...         with self:
 ...             self._names.append(name)
-...     @publish(ctx=False)
+...     @publish()
 ...     def reset(self):
 ...         with self:
 ...             names, self._names = self._names, []
@@ -116,7 +116,7 @@ performs write and read operations.
 >>> from versile.quick import *
 >>>
 >>> class Gateway(VExternal):
-...     @publish(show=True, ctx=False)
+...     @publish(show=True)
 ...     def get_file_stream(self):
 ...         _file = tempfile.NamedTemporaryFile()
 ...         data = VByteSimpleFileStreamerData(_file.name, 'r+',

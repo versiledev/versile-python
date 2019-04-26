@@ -55,7 +55,7 @@ class VBasePythonObject(VNativeObject):
         self._obj = python_obj
 
     __ext_doc = 'getattribute(attr) - return object attribute'
-    @publish(show=True, doc=__ext_doc, ctx=False)
+    @publish(show=True, doc=__ext_doc)
     def getattribute(self, attr):
         """Retreive an attribute on the object proxied by this class.
 
@@ -113,7 +113,7 @@ class VBasePythonObject(VNativeObject):
     __ext_doc = ('call(args, kargs) - perform call on (callable) object\n' +
                  '  args  - arguments (tuple)\n' +
                  '  kargs - keyword arguments (VFrozenDict)\n')
-    @publish(show=True, doc=__ext_doc, ctx=False)
+    @publish(show=True, doc=__ext_doc)
     def call(self, args, kargs):
         """Perform a call on the object proxied by this class.
 

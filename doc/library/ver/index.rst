@@ -48,7 +48,7 @@ example.
 ...         tg = VModule.name_tags(name=(u'mypkg', u'triangle'), version=(1, 0))
 ...         tag_obj = VTagged(self._sides, *tg)
 ...         return tag_obj._v_encode(context, explicit=explicit)
-... 
+...
 >>> ctx = VIOContext()
 >>> t = Triangle(3, 5, 9)
 >>> data = t._v_write(ctx)
@@ -75,7 +75,7 @@ the object embedded in the tag object representation.
 ...     def __init__(self, side_len):
 ...         super(Square, self).__init__()
 ...         self._side_len = side_len
-...     @publish(show=True, doc=True, ctx=False)
+...     @publish(show=True, doc=True)
 ...     def area(self):
 ...         """Returns the square's area."""
 ...         return self._side_len**2
@@ -84,7 +84,7 @@ the object embedded in the tag object representation.
 ...         tg = VModule.name_tags(name=(u'mypkg', u'square'), version=(1, 0))
 ...         tag_obj = VTagged(ref, *tg)
 ...         return tag_obj._v_encode(context, explicit=explicit)
-... 
+...
 >>> ctx = VObjectIOContext()
 >>> t = Square(4)
 >>> data = t._v_write(ctx)
@@ -155,23 +155,23 @@ format.
 ...             args = VEntity._v_lazy_native(args)
 ...             return cls(*args)
 ...         return (_assemble, list(value))
-... 
+...
 >>> ctx = VIOContext()
 >>> data = Triangle(3, 5, 9)._v_write(ctx)
->>> 
+>>>
 >>> class MathModule(VModule):
 ...     def __init__(self):
 ...         super(MathModule, self).__init__()
 ...         _entry = VModuleDecoder(name=(u'mypkg', u'triangle'), ver=(1, 0),
 ...                                 oid=None, decoder=Triangle._v_ver_decode)
 ...         self.add_decoder(_entry)
-... 
+...
 >>> _module = MathModule()
->>> # This would register the module centrally ...                                  
+>>> # This would register the module centrally ...
 ... VModuleResolver.add_import(_module)
->>> # ... however in this example we set up a resolver explicitly                   
+>>> # ... however in this example we set up a resolver explicitly
 ... resolver = VModuleResolver(modules=(_module,))
->>> 
+>>>
 >>> reader = VEntity._v_reader(ctx)
 >>> reader.read(data)
 41
@@ -200,7 +200,7 @@ by calling :class:`versile.orb.entity.VObject._v_set_proxy_factory`\
 >>> from versile.orb.entity import *
 >>> from versile.orb.module import VModuleResolver, VModule, VModuleDecoder
 >>> from versile.orb.external import *
->>> 
+>>>
 >>> class SquareProxy(VProxy):
 ...     def __init__(self, obj):
 ...         if isinstance(obj, VProxy):
@@ -217,14 +217,14 @@ by calling :class:`versile.orb.entity.VObject._v_set_proxy_factory`\
 ...             value = VEntity._v_lazy_native(value)
 ...             return cls(value)
 ...         return (_assemble, [value])
-... 
+...
 >>> class Square(VExternal):
 ...     """A square."""
 ...     def __init__(self, side_len):
 ...         super(Square, self).__init__()
 ...         self._v_set_proxy_factory(SquareProxy)
 ...         self._side_len = side_len
-...     @publish(show=True, doc=True, ctx=False)
+...     @publish(show=True, doc=True)
 ...     def area(self):
 ...         """Returns the square's area."""
 ...         return self._side_len**2
@@ -233,25 +233,25 @@ by calling :class:`versile.orb.entity.VObject._v_set_proxy_factory`\
 ...         tg = VModule.name_tags(name=(u'math', u'square'), version=(1, 0))
 ...         tag_obj = VTagged(ref, *tg)
 ...         return tag_obj._v_encode(context, explicit=explicit)
-... 
+...
 >>> ctx = VObjectIOContext()
 >>> t = Square(4)
 >>> data = t._v_write(ctx)
->>> 
+>>>
 >>> class MathModule(VModule):
 ...     def __init__(self):
 ...         super(MathModule, self).__init__()
 ...         _entry = VModuleDecoder(name=(u'math', u'square'), ver=(1, 0),
 ...                                 oid=None, decoder=SquareProxy._v_ver_decoder)
 ...         self.add_decoder(_entry)
-... 
+...
 >>> _module = MathModule()
->>> 
+>>>
 >>> # This would register the module centrally ...
 ... VModuleResolver.add_import(_module)
 >>> # However in this example we set up a resolver explicitly
 ... resolver = VModuleResolver(modules=(_module,))
->>> 
+>>>
 >>> reader = VEntity._v_reader(ctx)
 >>> reader.read(data)
 35
@@ -292,7 +292,7 @@ that this is an incomplete example, as it does not implement
 ...     @property
 ...     def sides(self):
 ...         return self._sides
-... 
+...
 >>> class Triangle(VEntity):
 ...     """Triangle with integer dimensions."""
 ...     def __init__(self, a, b, c):
@@ -309,19 +309,19 @@ that this is an incomplete example, as it does not implement
 ...         def _assemble(args):
 ...             return cls(a, b, c)
 ...         return (_assemble, [])
-... 
+...
 >>> class MathModule(VModule):
 ...     def __init__(self):
 ...         super(MathModule, self).__init__()
 ...         _entry = VModuleConverter(Triangle._v_converter,
 ...                                   classes=(MyTriangle,))
 ...         self.add_converter(_entry)
-... 
+...
 >>> _module = MathModule()
 >>> VModuleResolver.add_import(_module)
->>> 
+>>>
 >>> resolver = VModuleResolver(modules=(_module,))
->>> 
+>>>
 >>> some_triangle = MyTriangle(2, 5, 9)
 >>> converter = resolver.converter(some_triangle)
 >>> f, args = converter
@@ -361,16 +361,16 @@ setting up a module resolver which resolves such added 'imports'.
 >>> array = array.frozen()
 >>> ctx = VIOContext()
 >>> data = array._v_write(ctx)
->>> 
+>>>
 >>> reader = VEntity._v_reader(ctx)
 >>> reader.read(data)
 34
 >>> tagged = reader.result()
->>> 
->>> # We can create a resolver this way because the versile.vse.container           
-... # module registers itself as an available 'import' when it is imported          
+>>>
+>>> # We can create a resolver this way because the versile.vse.container
+... # module registers itself as an available 'import' when it is imported
 ... resolver = VModuleResolver(add_imports=True)
->>> 
+>>>
 >>> decoder = resolver.decoder(tagged)
 >>> f, args = decoder
 >>> rec = f(args)
@@ -382,7 +382,7 @@ A module resolver can be registered with a
 :class:`versile.orb.entity.VTagged` objects, by registering with the
 associated :class:`versile.orb.link.VLinkConfig`\ . The link node will
 then use that resolver to parse and resolve
-:class:`versile.orb.entity.VTagged` objects received from the peer. 
+:class:`versile.orb.entity.VTagged` objects received from the peer.
 
 Module APIs
 -----------

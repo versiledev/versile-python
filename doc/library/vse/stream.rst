@@ -122,7 +122,7 @@ is a complete example.
 >>> from versile.quick import *
 >>> from versile.vse.stream import *
 >>> class Gateway(VExternal):
-... 	@publish(show=True, ctx=False)
+... 	@publish(show=True)
 ... 	def get_stream(self):
 ... 	    data = b'This byte data will be exposed as a readable stream'
 ... 	    streamer = VByteStreamer.fixed(data, seek_rew=True, seek_fwd=True)
@@ -166,7 +166,7 @@ a file.
 >>> from versile.quick import *
 >>> from versile.vse.stream import *
 >>> class Gateway(VExternal):
-...     @publish(show=True, ctx=False)
+...     @publish(show=True)
 ...     def get_stream(self):
 ...         _file = tempfile.NamedTemporaryFile()
 ...         filename = _file.name
@@ -242,7 +242,7 @@ instantiating directly. Below is a complete example.
 >>> from versile.quick import *
 >>> from versile.vse.stream import *
 >>> class Gateway(VExternal):
-...         @publish(show=True, ctx=False)
+...         @publish(show=True)
 ...         def get_stream(self):
 ...             data = (2.5, False, u'Some Text', (0, 1))
 ...             streamer = VEntityStreamer.fixed(data, seek_rew=True,
@@ -292,7 +292,7 @@ received from the remote streamer.
 >>> from versile.quick import *
 >>> from versile.vse.stream import *
 >>> class Gateway(VExternal):
-...         @publish(show=True, ctx=False)
+...         @publish(show=True)
 ...         def get_stream(self):
 ...             data = (2.5, False, u'Some Text', (0, 1))
 ...             streamer = VEntityStreamer.iterator(data)
@@ -344,7 +344,7 @@ observer to trigger reading data from the stream.
 >>> from versile.quick import *
 >>> from versile.vse.stream import *
 >>> class Gateway(VExternal):
-...         @publish(show=True, ctx=False)
+...         @publish(show=True)
 ...         def get_stream(self):
 ...             data = (2.5, False, u'Some Text', (0, 1))
 ...             streamer = VEntityStreamer.fixed(data, seek_rew=True,

@@ -24,14 +24,14 @@ sorted order::
             super(NameSorter, self).__init__()
             self._names = []
 
-        @publish(show=True, doc=True, ctx=False)
+        @publish(show=True, doc=True)
         def add(self, name):
             """Appends a name to the name buffer."""
             vchk(name, vtyp(unicode), vset)
             with self:
                 self._names.append(name)
 
-        @publish(show=True, doc=True, ctx=False)
+        @publish(show=True, doc=True)
         def reset(self):
             """Clears the buffer and returns (sorted) buffered names."""
             with self:
@@ -68,13 +68,13 @@ Below is an example which demonstrates remote use of the class.
 ...     def __init__(self):
 ...         super(NameSorter, self).__init__()
 ...         self._names = []
-...     @publish(show=True, doc=True, ctx=False)
+...     @publish(show=True, doc=True)
 ...     def add(self, name):
 ...         """Appends a name to the name buffer."""
 ...         vchk(name, vtyp(unicode), vset)
 ...         with self:
 ...             self._names.append(name)
-...     @publish(show=True, doc=True, ctx=False)
+...     @publish(show=True, doc=True)
 ...     def reset(self):
 ...         """Clears the buffer and returns (sorted) buffered names."""
 ...         with self:

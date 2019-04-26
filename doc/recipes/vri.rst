@@ -10,13 +10,6 @@ object. Derived classes of :class:`versile.orb.url.VUrl` have
 mechanisms for performing these operations, and an implementation is
 typically retreived from :mod:`versile.quick`\ .
 
-.. note::
-
-    Due to technical details of the :term:`VOL` protocol for a link
-    handshake, global license information must be set on
-    :class:`versile.Versile` before a :class:`VLink` can be
-    constructed. See :class:`versile.Versile` for more information.
-
 In this recipe we explore a simple scenario for accessing a
 :term:`VRI` resource without any protocol-level client authentication,
 accessing a remote :class:`versile.demo.SimpleGateway` gateway object.

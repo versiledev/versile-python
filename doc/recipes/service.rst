@@ -8,14 +8,6 @@ mechanisms for setting up a listening service. A service for the
 :term:`VOP` protocol is typically set up using an implementing service
 class imported from :mod:`versile.quick`\ .
 
-.. note::
-
-    Due to technical details of the :term:`VOL` protocol for a link
-    handshake, global license information must be set on
-    :class:`versile.Versile` before any service inherited from
-    :class:`versile.orb.service.VService` can be constructed. See
-    :class:`versile.Versile` for more information.
-
 The simplest scenario for setting up a :term:`VOP` service involves
 setting up a service object with a gateway factory, authorizer, and a
 service keypair. Below is a code example which runs a simple listening

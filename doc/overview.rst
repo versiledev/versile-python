@@ -129,8 +129,6 @@ set up an I/O chain.
    service as a daemon with handlers for SIGTERM. Alternatively a
    service can be killed "the hard way" by sending SIGKILL.
 
-Similar to links, global license information must be set on
-:class:`versile.Versile` before services can be constructed.
 
 Connecting to a remote object broker
 ....................................
@@ -188,7 +186,7 @@ the code has very little overhead::
     class MyEchoer(VExternal):
         """Echo service - receive and return objects."""
 
-        @publish(show=True, doc=True, ctx=False)
+        @publish(show=True, doc=True)
         def echo(self, arg):
             """Returns the received argument."""
             return arg
@@ -233,7 +231,7 @@ peers. Below is an example which passes an immutable dictionary.
 >>> @doc
 ... class ExampleService(VExternal):
 ...     """Example service - can return a hardcoded dictionary."""
-...     @publish(show=True, doc=True, ctx=False)
+...     @publish(show=True, doc=True)
 ...     def get_dict(self):
 ...         """Returns a hardcoded dictionary."""
 ...         return VFrozenDict({1:100, 2:150})

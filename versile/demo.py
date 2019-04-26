@@ -54,7 +54,7 @@ class SimpleGateway(VDispatcher):
 class Echoer(VExternal):
     """A simple service object for receiving and echoing a VEntity."""
 
-    @publish(show=True, doc=True, ctx=False)
+    @publish(show=True, doc=True)
     def echo(self, arg):
         """Returns the received argument.
 
@@ -74,7 +74,7 @@ class Adder(VExternal, VLockable):
         VLockable.__init__(self)
         self._sum = 0
 
-    @publish(show=True, doc=True, ctx=False)
+    @publish(show=True, doc=True)
     def add(self, value):
         """Adds received value and returns updated partial sum.
 
@@ -86,7 +86,7 @@ class Adder(VExternal, VLockable):
             self._sum += value
             return self._sum
 
-    @publish(show=True, doc=True, ctx=False)
+    @publish(show=True, doc=True)
     def result(self):
         """Returns the sum of submitted values.
 
@@ -96,7 +96,7 @@ class Adder(VExternal, VLockable):
         with self:
             return self._sum
 
-    @publish(show=True, doc=True, ctx=False)
+    @publish(show=True, doc=True)
     def reset(self):
         """Reset partial sum to zero."""
         with self:
